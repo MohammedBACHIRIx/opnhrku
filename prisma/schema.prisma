@@ -1,0 +1,67 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Resource {
+  id           String    @id @default(uuid())
+  title        String
+  url          String
+  category     String
+  tags         String?   // Comma-separated string
+  description  String    @db.Text
+  notes        String?   @db.Text // JSON: {"en": "...", "ar": "...", "fr": "..."}
+  language     String?
+  legalStatus  String    @default("user-submitted") // "official", "mirror", "user-submitted", "pirate"
+  verified     Boolean   @default(false)
+  addedBy      String?   @default("system")
+  clicks       Int       @default(0)
+  slug         String    @unique
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  
+  reports      Report[]
+  learningPathItems LearningPathItem[]
+
+  @@index([title])
+  @@index([category])
+  @@index([tags])
+  @@fulltext([title, description, tags, notes]) // For PostgreSQL full-text search
+}
+
+model LearningPath {
+  id          String    @id @default(uuid())
+  title       String
+  description String    @db.Text
+  category    String
+  createdBy   String?
+  createdAt   DateTime  @default(now())
+  items       LearningPathItem[]
+}
+
+// Junction table for ordered resources in a path
+model LearningPathItem {
+  id             String       @id @default(uuid())
+  learningPathId String
+  resourceId     String
+  order          Int
+  learningPath   LearningPath @relation(fields: [learningPathId], references: [id], onDelete: Cascade)
+  resource       Resource     @relation(fields: [resourceId], references: [id], onDelete: Cascade)
+  @@unique([learningPathId, resourceId])
+}
+
+model Report {
+  id          String   @id @default(uuid())
+  resourceId  String
+  reason      String   @db.Text
+  reportedBy  String?
+  status      String   @default("open") // "open", "resolved"
+  createdAt   DateTime @default(now())
+  resource    Resource @relation(fields: [resourceId], references: [id], onDelete: Cascade)
+}

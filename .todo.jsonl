@@ -1,0 +1,12 @@
+{"id":"1","content":"Set up Next.js 14 project with TypeScript and Tailwind CSS","status":"completed","priority":"high"}
+{"id":"2","content":"Create Prisma schema with Resource, LearningPath, LearningPathItem, and Report models","status":"completed","priority":"high"}
+{"id":"3","content":"Set up Supabase integration and authentication","status":"completed","priority":"high"}
+{"id":"4","content":"Create home page with hero section and featured categories","status":"completed","priority":"medium"}
+{"id":"5","content":"Implement browse page with filtering and search","status":"completed","priority":"medium"}
+{"id":"6","content":"Create resource detail page with click tracking","status":"completed","priority":"medium"}
+{"id":"7","content":"Build learning paths page","status":"completed","priority":"medium"}
+{"id":"8","content":"Implement AI assistant with full-text search","status":"completed","priority":"medium"}
+{"id":"9","content":"Create admin dashboard with bulk import and resource management","status":"completed","priority":"high"}
+{"id":"10","content":"Add multilingual support (EN/AR/FR)","status":"pending","priority":"medium"}
+{"id":"11","content":"Implement dark/light mode theme toggle","status":"completed","priority":"medium"}
+{"id":"12","content":"Create README with setup instructions","status":"completed","priority":"low"}es
